@@ -11,22 +11,23 @@ type PropsType = {
   title: string
   id: string
   tasks: TaskType[]
-  removeTask: (taskId: string) => void
+  removeTodoList: (id: string) => void
+  removeTask: (taskId: string, todolistId: string) => void
   changeFilter: (value: FilterValuesType, todolistId: string) => void
-  addTask: (title: string) => void
-  changeTaskStatus: (taskId: string, isDone: boolean) => void
+  addTask: (title: string, todolistId: string) => void
+  changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
   filter: FilterValuesType
 }
 
 export function Todolist(
-   {removeTask, tasks, changeTaskStatus, changeFilter, filter, addTask, title, id}: PropsType) {
+   {removeTask, tasks, changeTaskStatus, changeFilter, filter, addTask, title, id, removeTodoList}: PropsType) {
 
   let [taskTitle, setTitle] = useState("")
   let [error, setError] = useState<string | null>(null)
 
   const addTaskHandler = () => {
     if (taskTitle) {
-      addTask(taskTitle.trim());
+      addTask(taskTitle.trim(), id);
       setTitle("");
     } else {
       setError("Title is required");
@@ -47,8 +48,16 @@ export function Todolist(
   const onCompletedClickHandler = () => changeFilter("completed", id);
 
 
+  const removeTodoListHandler = () => {
+    removeTodoList(id)
+  };
   return <div>
-    <h3>{title}</h3>
+    <div className={'title'}>
+      <h3>{title}</h3>
+      <button onClick={removeTodoListHandler}>x</button>
+    </div>
+
+
     <div>
       <input value={taskTitle}
              onChange={onChangeHandler}
@@ -61,9 +70,9 @@ export function Todolist(
     <ul>
       {
         tasks.map(t => {
-          const onClickHandler = () => removeTask(t.id)
+          const onClickHandler = () => removeTask(t.id, id)
           const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            changeTaskStatus(t.id, e.currentTarget.checked);
+            changeTaskStatus(t.id, e.currentTarget.checked, id);
           }
 
           return <li key={t.id} className={t.isDone ? "is-done" : ""}>
