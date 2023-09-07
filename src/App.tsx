@@ -36,7 +36,6 @@ function App() {
     ]
   });
 
-
   const removeTask = (id: string, todolistId: string) => {
     setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== id)})
   };
@@ -55,15 +54,19 @@ function App() {
   };
 
   const changeFilter = (filter: FilterValuesType, todolistId: string) => {
-    setTodoLists(todoLists.map(todoList => todoList.id === todolistId ? {...todoList, filter} : todoList))
+    setTodoLists(todoLists.map(todoList =>
+       todoList.id === todolistId ? {...todoList, filter} : todoList))
   };
 
-  function removeTodolist(id: string) {
-   
-  }
+  const removeTodolist = (id: string) => {
+    setTodoLists(todoLists.filter(todoList => todoList.id !== id))
+    delete tasks[id]
+  };
 
-  const addTodoList = () => {
-
+  const addTodoList = (title: string) => {
+    let newTodoListId = v1()
+    setTodoLists([{id: newTodoListId, title: title, filter: "all"}, ...todoLists]);
+    setTasks({...tasks, [newTodoListId]: []})
   };
   return (
      <div className="App">
@@ -76,10 +79,10 @@ function App() {
            let tasksForTodolist = allTodolistTasks;
 
            if (tl.filter === "active") {
-             tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
+             tasksForTodolist = allTodolistTasks.filter(t => !t.isDone);
            }
            if (tl.filter === "completed") {
-             tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
+             tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
            }
 
            return <Todolist
