@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
+import {AddItemForm} from "./AddItemForm";
 
 export type FilterValuesType = "all" | "active" | "completed";
 type TodolistType = {
@@ -41,13 +42,8 @@ function App() {
   };
 
   function addTask(title: string, todolistId: string) {
-    let task = {id: v1(), title: title, isDone: false};
-    //достанем нужный массив по todolistId:
-    let todolistTasks = tasks[todolistId];
-    // перезапишем в этом объекте массив для нужного тудулиста копией, добавив в начало новую таску:
-    tasks[todolistId] = [task, ...todolistTasks];
-    // засетаем в стейт копию объекта, чтобы React отреагировал перерисовкой
-    setTasks({...tasks});
+    let task = {id: v1(), title, isDone: false};
+    setTasks({...tasks, [todolistId]: [task, ...tasks[todolistId]]});
   }
 
   function changeStatus(id: string, isDone: boolean, todolistId: string) {
@@ -80,8 +76,14 @@ function App() {
     setTasks({...tasks});
   }
 
+  const addTodoList = () => {
+
+  };
   return (
      <div className="App">
+
+       <AddItemForm addItem={addTodoList}/>
+
        {
          todoLists.map(tl => {
            let allTodolistTasks = tasks[tl.id];
