@@ -68,6 +68,21 @@ function App() {
     setTodoLists([{id: newTodoListId, title: title, filter: "all"}, ...todoLists]);
     setTasks({...tasks, [newTodoListId]: []})
   };
+
+
+  const changeTaskTitleHandler = (id: string, title: string, todolistId: string) => {
+    setTasks({
+      ...tasks, [todolistId]: tasks[todolistId].map(task =>
+         task.id === id ? {...task, title} : task
+      )
+    })
+  };
+
+  const onChangeTodoListTitle = (id: string, title: string) => {
+    setTodoLists(todoLists.map(todoList => todoList.id === id ? {...todoList, title} : todoList))
+  };
+
+
   return (
      <div className="App">
 
@@ -76,20 +91,22 @@ function App() {
        {
          todoLists.map(tl => {
            let allTodolistTasks = tasks[tl.id];
-           let tasksForTodolist = allTodolistTasks;
 
            if (tl.filter === "active") {
-             tasksForTodolist = allTodolistTasks.filter(t => !t.isDone);
+             allTodolistTasks = allTodolistTasks.filter(t => !t.isDone);
            }
            if (tl.filter === "completed") {
-             tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
+             allTodolistTasks = allTodolistTasks.filter(t => t.isDone);
            }
 
+
            return <Todolist
+              changeTaskTitle={changeTaskTitleHandler}
+              onChangeTodoListTitle={onChangeTodoListTitle}
               key={tl.id}
               id={tl.id}
               title={tl.title}
-              tasks={tasksForTodolist}
+              tasks={allTodolistTasks}
               removeTask={removeTask}
               changeFilter={changeFilter}
               addTask={addTask}
