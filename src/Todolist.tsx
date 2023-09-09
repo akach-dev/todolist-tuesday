@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState, KeyboardEvent, FC} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./components/AddItemForm";
+import {EditableSpan} from "./components/EditableSpan";
 
 export type TaskType = {
   id: string
@@ -21,7 +22,15 @@ type PropsType = {
 }
 
 export const Todolist: FC<PropsType> = ({
-                                          removeTodolist, removeTask, filter, tasks, changeFilter, addTask, changeTaskStatus, title, id
+                                          removeTodolist,
+                                          removeTask,
+                                          filter,
+                                          tasks,
+                                          changeFilter,
+                                          addTask,
+                                          changeTaskStatus,
+                                          title,
+                                          id
                                         }) => {
 
 
@@ -50,7 +59,7 @@ export const Todolist: FC<PropsType> = ({
 
           return <li key={t.id} className={t.isDone ? "is-done" : ""}>
             <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
-            <span>{t.title}</span>
+            <EditableSpan oldTitle={t.title}/>
             <button onClick={onClickHandler}>x</button>
           </li>
         })
