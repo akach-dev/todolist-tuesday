@@ -18,6 +18,8 @@ type PropsType = {
   addTask: (title: string, todolistId: string) => void
   changeTaskStatus: (id: string, isDone: boolean, todolistId: string) => void
   removeTodolist: (id: string) => void
+  updateTaskTitle: (todolistId: string, taskId: string, title: string) => void
+  updateTodoListTitle: (todolistId: string, title: string) => void
   filter: FilterValuesType
 }
 
@@ -30,7 +32,9 @@ export const Todolist: FC<PropsType> = ({
                                           addTask,
                                           changeTaskStatus,
                                           title,
-                                          id
+                                          id,
+                                          updateTaskTitle,
+                                          updateTodoListTitle
                                         }) => {
 
 
@@ -42,8 +46,13 @@ export const Todolist: FC<PropsType> = ({
 
   const addTaskHandler = (title: string) => addTask(title, id)
 
+  const updateTodoListTitleHandler = (title: string) => updateTodoListTitle(id, title)
+
+  const updateTaskTitleHandler = (title: string, taskId: string) => updateTaskTitle(id, taskId, title)
+
   return <div>
-    <h3> {title}
+    <h3>
+      <EditableSpan oldTitle={title} callback={updateTodoListTitleHandler}/>
       <button onClick={removeTodolistHandler}>x</button>
     </h3>
     <AddItemForm addItem={addTaskHandler}/>
@@ -57,9 +66,10 @@ export const Todolist: FC<PropsType> = ({
             changeTaskStatus(t.id, newIsDoneValue, id);
           }
 
+
           return <li key={t.id} className={t.isDone ? "is-done" : ""}>
             <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
-            <EditableSpan oldTitle={t.title}/>
+            <EditableSpan oldTitle={t.title} callback={(title) => updateTaskTitleHandler(title, t.id)}/>
             <button onClick={onClickHandler}>x</button>
           </li>
         })
