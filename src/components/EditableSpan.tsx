@@ -12,7 +12,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = ({oldTitle, callback}) =>
 
   const isOpenHandler = () => {
     setIsOpen(!isOpen)
-    if (isOpen) {
+    if (isOpen && newTitle) {
       callback(newTitle)
     }
 
