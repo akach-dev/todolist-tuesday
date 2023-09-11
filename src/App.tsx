@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {Header} from "./components/Header";
+import {Container} from '@mui/material';
 
 
 export type FilterValuesType = "all" | "active" | "completed";
@@ -88,36 +89,36 @@ function App() {
   return (
      <div className="App">
        <Header/>
-       <AddItemForm addItem={addTodoList}/>
+       <Container fixed>
+         <AddItemForm addItem={addTodoList}/>
+         {
+           todoLists.map(tl => {
+             let allTodolistTasks = tasks[tl.id];
 
-       {
-         todoLists.map(tl => {
-           let allTodolistTasks = tasks[tl.id];
+             if (tl.filter === "active") {
+               allTodolistTasks = allTodolistTasks.filter(t => !t.isDone);
+             }
+             if (tl.filter === "completed") {
+               allTodolistTasks = allTodolistTasks.filter(t => t.isDone);
+             }
 
-           if (tl.filter === "active") {
-             allTodolistTasks = allTodolistTasks.filter(t => !t.isDone);
-           }
-           if (tl.filter === "completed") {
-             allTodolistTasks = allTodolistTasks.filter(t => t.isDone);
-           }
-
-           return <Todolist
-              key={tl.id}
-              id={tl.id}
-              title={tl.title}
-              tasks={allTodolistTasks}
-              removeTask={removeTask}
-              changeFilter={changeFilter}
-              addTask={addTask}
-              changeTaskStatus={changeStatus}
-              filter={tl.filter}
-              removeTodolist={removeTodolist}
-              updateTaskTitle={updateTaskTitle}
-              updateTodoListTitle={updateTodoListTitle}
-           />
-         })
-       }
-
+             return <Todolist
+                key={tl.id}
+                id={tl.id}
+                title={tl.title}
+                tasks={allTodolistTasks}
+                removeTask={removeTask}
+                changeFilter={changeFilter}
+                addTask={addTask}
+                changeTaskStatus={changeStatus}
+                filter={tl.filter}
+                removeTodolist={removeTodolist}
+                updateTaskTitle={updateTaskTitle}
+                updateTodoListTitle={updateTodoListTitle}
+             />
+           })
+         }
+       </Container>
      </div>
   );
 }
