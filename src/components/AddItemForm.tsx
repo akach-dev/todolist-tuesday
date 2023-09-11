@@ -34,7 +34,7 @@ export const AddItemForm: FC<AddItemFormPropsType> = ({addItem}) => {
      <div>
        <input value={inputTitle}
               onChange={onChangeHandler}
-              onKeyPress={onKeyPressHandler}
+              onKeyDown={onKeyPressHandler}
               className={error ? "error" : ""}
        />
        <Button onClick={addTaskHandler} color={"primary"} variant={"contained"}

@@ -2,7 +2,9 @@ import React, {ChangeEvent, FC} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
-import {Button} from "@mui/material";
+import {Button, IconButton} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import {Delete} from "@mui/icons-material";
 
 export type TaskType = {
   id: string
@@ -54,7 +56,9 @@ export const Todolist: FC<PropsType> = ({
   return <div>
     <h3>
       <EditableSpan oldTitle={title} callback={updateTodoListTitleHandler}/>
-      <button onClick={removeTodolistHandler}>x</button>
+      <IconButton aria-label="delete" onClick={removeTodolistHandler}>
+        <DeleteIcon/>
+      </IconButton>
     </h3>
     <AddItemForm addItem={addTaskHandler}/>
 
@@ -69,16 +73,15 @@ export const Todolist: FC<PropsType> = ({
 
 
           return <li key={t.id} className={t.isDone ? "is-done" : ""}>
+
             <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
             <EditableSpan oldTitle={t.title} callback={(title) => updateTaskTitleHandler(title, t.id)}/>
-
-
-            <Button
-               onClick={onClickHandler}
-               color={"error"}
-               variant={"contained"}
-               style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
-            >x</Button>
+            <IconButton aria-label="delete"
+                        onClick={onClickHandler}
+                        style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+            >
+              <DeleteIcon/>
+            </IconButton>
           </li>
         })
       }
