@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent, FC} from 'react';
+import React, {ChangeEvent, FC} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
@@ -72,7 +72,12 @@ export const Todolist: FC<PropsType> = ({
             <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
             <EditableSpan oldTitle={t.title} callback={(title) => updateTaskTitleHandler(title, t.id)}/>
 
-            <Button onClick={onClickHandler} size="small" variant="contained" color={"error"}>x</Button>
+            <Button
+               onClick={onClickHandler}
+               size="small"
+               variant="contained"
+               color={"error"}
+            >x</Button>
           </li>
         })
       }
