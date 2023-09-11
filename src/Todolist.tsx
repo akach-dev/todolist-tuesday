@@ -87,15 +87,21 @@ export const Todolist: FC<PropsType> = ({
       }
     </ul>
     <div>
-      <button className={filter === 'all' ? "active-filter" : ""}
-              onClick={onAllClickHandler}>All
-      </button>
-      <button className={filter === 'active' ? "active-filter" : ""}
-              onClick={onActiveClickHandler}>Active
-      </button>
-      <button className={filter === 'completed' ? "active-filter" : ""}
-              onClick={onCompletedClickHandler}>Completed
-      </button>
+      <Button
+         variant={filter === 'all' ? "outlined" : "text"}
+         color={filter === 'all' ? 'secondary' : 'primary'}
+         onClick={onAllClickHandler}>All
+      </Button>
+      <Button
+         variant={filter === 'active' ? "outlined" : "text"}
+         color={filter === 'active' ? 'secondary' : 'primary'}
+         onClick={onActiveClickHandler}>Active
+      </Button>
+      <Button
+         variant={filter === 'completed' ? "outlined" : "text"}
+         color={filter === 'completed' ? 'secondary' : 'primary'}
+         onClick={onCompletedClickHandler}>Completed
+      </Button>
     </div>
   </div>
 };
