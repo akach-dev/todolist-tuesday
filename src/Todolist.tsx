@@ -61,32 +61,30 @@ export const Todolist: FC<PropsType> = ({
     </h3>
     <AddItemForm addItem={addTaskHandler}/>
 
-    <ul>
-      {
-        tasks.map(t => {
-          const onClickHandler = () => removeTask(t.id, id)
-          const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            let newIsDoneValue = e.currentTarget.checked;
-            changeTaskStatus(t.id, newIsDoneValue, id);
-          }
+    {
+      tasks.map(t => {
+        const onClickHandler = () => removeTask(t.id, id)
+        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+          let newIsDoneValue = e.currentTarget.checked;
+          changeTaskStatus(t.id, newIsDoneValue, id);
+        }
 
 
-          return <li key={t.id} className={t.isDone ? "is-done" : ""}>
+        return <div key={t.id} className={t.isDone ? "is-done" : ""}>
 
-            <Checkbox onChange={onChangeHandler} checked={t.isDone} color={"primary"}/>
+          <Checkbox onChange={onChangeHandler} checked={t.isDone} color={"primary"}/>
 
-            <EditableSpan oldTitle={t.title} callback={(title) => updateTaskTitleHandler(title, t.id)}/>
+          <EditableSpan oldTitle={t.title} callback={(title) => updateTaskTitleHandler(title, t.id)}/>
 
-            <IconButton aria-label="delete"
-                        onClick={onClickHandler}
-                        style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
-            >
-              <DeleteIcon/>
-            </IconButton>
-          </li>
-        })
-      }
-    </ul>
+          <IconButton aria-label="delete"
+                      onClick={onClickHandler}
+                      style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
+          >
+            <DeleteIcon/>
+          </IconButton>
+        </div>
+      })
+    }
     <div>
       <Button
          variant={filter === 'all' ? "outlined" : "text"}

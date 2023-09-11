@@ -1,5 +1,6 @@
 import React, {ChangeEvent, FC, KeyboardEvent, useState} from 'react';
-import {Button, TextField} from "@mui/material";
+import {Button, IconButton, TextField} from "@mui/material";
+import {AddBox} from "@mui/icons-material";
 
 type AddItemFormPropsType = {
   addItem: (title: string) => void
@@ -40,10 +41,9 @@ export const AddItemForm: FC<AddItemFormPropsType> = ({addItem}) => {
                   label={'Title'}
                   helperText={error}
        />
-
-       <Button onClick={addTaskHandler} color={"primary"} variant={"contained"}
-               style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}>+</Button>
-
+       <IconButton onClick={addTaskHandler} color={"primary"}>
+         <AddBox/>
+       </IconButton>
      </div>
   );
 };
