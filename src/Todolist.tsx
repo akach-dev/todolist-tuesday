@@ -2,9 +2,8 @@ import React, {ChangeEvent, FC} from 'react';
 import {FilterValuesType} from './App';
 import {AddItemForm} from "./components/AddItemForm";
 import {EditableSpan} from "./components/EditableSpan";
-import {Button, IconButton} from "@mui/material";
+import {Button, Checkbox, IconButton} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import {Delete} from "@mui/icons-material";
 
 export type TaskType = {
   id: string
@@ -74,8 +73,10 @@ export const Todolist: FC<PropsType> = ({
 
           return <li key={t.id} className={t.isDone ? "is-done" : ""}>
 
-            <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
+            <Checkbox onChange={onChangeHandler} checked={t.isDone} color={"primary"}/>
+
             <EditableSpan oldTitle={t.title} callback={(title) => updateTaskTitleHandler(title, t.id)}/>
+
             <IconButton aria-label="delete"
                         onClick={onClickHandler}
                         style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
@@ -89,17 +90,17 @@ export const Todolist: FC<PropsType> = ({
     <div>
       <Button
          variant={filter === 'all' ? "outlined" : "text"}
-         color={filter === 'all' ? 'secondary' : 'primary'}
+         color={'inherit'}
          onClick={onAllClickHandler}>All
       </Button>
       <Button
          variant={filter === 'active' ? "outlined" : "text"}
-         color={filter === 'active' ? 'secondary' : 'primary'}
+         color={'primary'}
          onClick={onActiveClickHandler}>Active
       </Button>
       <Button
          variant={filter === 'completed' ? "outlined" : "text"}
-         color={filter === 'completed' ? 'secondary' : 'primary'}
+         color={'secondary'}
          onClick={onCompletedClickHandler}>Completed
       </Button>
     </div>

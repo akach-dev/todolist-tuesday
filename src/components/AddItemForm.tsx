@@ -34,15 +34,16 @@ export const AddItemForm: FC<AddItemFormPropsType> = ({addItem}) => {
      <div>
 
        <TextField value={inputTitle}
-                  variant={"outlined"}
                   onChange={onChangeHandler}
                   onKeyDown={onKeyPressHandler}
-                  className={error ? "error" : ""}/>
+                  error={!!error}
+                  label={'Title'}
+                  helperText={error}
+       />
 
        <Button onClick={addTaskHandler} color={"primary"} variant={"contained"}
                style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}>+</Button>
 
-       {error && <div className="error-message">{error}</div>}
      </div>
   );
 };
