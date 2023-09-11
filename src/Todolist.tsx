@@ -72,11 +72,12 @@ export const Todolist: FC<PropsType> = ({
             <input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>
             <EditableSpan oldTitle={t.title} callback={(title) => updateTaskTitleHandler(title, t.id)}/>
 
+
             <Button
                onClick={onClickHandler}
-               size="small"
-               variant="contained"
                color={"error"}
+               variant={"contained"}
+               style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}
             >x</Button>
           </li>
         })
