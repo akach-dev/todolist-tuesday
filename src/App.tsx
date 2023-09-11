@@ -3,6 +3,14 @@ import './App.css';
 import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from "./components/AddItemForm";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import {Header} from "./components/Header";
+
 
 export type FilterValuesType = "all" | "active" | "completed";
 type TodolistType = {
@@ -79,8 +87,9 @@ function App() {
 
   return (
      <div className="App">
-
+       <Header/>
        <AddItemForm addItem={addTodoList}/>
+
        {
          todoLists.map(tl => {
            let allTodolistTasks = tasks[tl.id];
@@ -91,7 +100,7 @@ function App() {
            if (tl.filter === "completed") {
              allTodolistTasks = allTodolistTasks.filter(t => t.isDone);
            }
-           
+
            return <Todolist
               key={tl.id}
               id={tl.id}
