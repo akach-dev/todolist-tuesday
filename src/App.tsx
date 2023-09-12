@@ -94,14 +94,15 @@ function App() {
            {
              todoLists.map(tl => {
                let allTodolistTasks = tasks[tl.id];
-
-               if (tl.filter === "active") {
-                 allTodolistTasks = allTodolistTasks.filter(t => !t.isDone);
+               
+               switch (tl.filter) {
+                 case "completed":
+                   allTodolistTasks = allTodolistTasks.filter(t => t.isDone);
+                   break
+                 case "active":
+                   allTodolistTasks = allTodolistTasks.filter(t => !t.isDone);
+                   break
                }
-               if (tl.filter === "completed") {
-                 allTodolistTasks = allTodolistTasks.filter(t => t.isDone);
-               }
-
 
                return <Grid key={tl.id}>
                  <Paper elevation={4} style={{
